@@ -29,7 +29,7 @@ const getRomanNumberFromArabic = (req,res) => {
 }
 
 /**
- * 
+ * Initiate connexion to server side event.
  * @param {*} req 
  * @param {*} res 
  */
@@ -40,7 +40,7 @@ const getRomanNumberFromArabic = (req,res) => {
 
 
 /**
- * 
+ * Send data to connected clients.
  * @param {*} client 
  * @param {*} result 
  * @returns 
