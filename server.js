@@ -11,13 +11,14 @@ app.use(express.static(__dirname + '/views')); // set the static files location 
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 app.use(bodyParser.json());                      // pull information from html in POST
 
-router.get('/', function(req, res, next) {
+router.get('/', function(_req, res) {
     res.render('index.html');
 });
 
 // Route for the convertion of my number
 router.post("/arabic/convert",romanController.getRomanNumberFromArabic);
-
+// Route for subscribe to server event
+router.get("/subscribe",romanController.eventHandler);
 app.use('/', router);
 
 app.listen(port);

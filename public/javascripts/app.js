@@ -4,7 +4,7 @@
  */
 function submitForm() {
 	let number = document.getElementById("arabic-number").value;
-	fetch("http://localhost:3000/arabic/convert",{
+	fetch("/arabic/convert",{
 		method: "POST",
 		headers: {
 			'Accept': 'application/json',
@@ -13,12 +13,20 @@ function submitForm() {
 		body : JSON.stringify({
 			number 
 		})
-	}).then(async (responseData) => {
-		let data = await responseData.json();
-		document.getElementById("response-message").textContent = `The Roman number of ${number} is ${data.result}`
-	}).catch((err) => {
-		document.getElementById("response-message").textContent = `Please send a valid number`;
 	})
 }
+
+var evtSource = new EventSource('/subscribe');
+
+evtSource.onmessage = (e) => {
+  let data = JSON.parse(e.data);
+  let number = document.getElementById("arabic-number").value;
+  document.getElementById("response-message").textContent = (data.error) ? data.error.message : `The Roman number of ${number} is ${data.result}`;
+}
+
+evtSource.onerror = () => {
+	console.log("EventSource failed:");
+};
+
 
 
